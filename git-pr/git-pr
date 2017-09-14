@@ -1,4 +1,4 @@
-# !/usr/bin/env ruby
+#!/usr/bin/env ruby
 
 
 require 'octokit'
@@ -261,6 +261,11 @@ command_args = ARGV[1..-1]
 
 unless valid_commands.include?(command)
   puts "Invalid command '#{command}'; must be one of: #{valid_commands.join('/')}"
+  exit 1
+end
+
+if !File.directory?('.git')
+  puts 'Current directory is not a git repository'
   exit 1
 end
 
