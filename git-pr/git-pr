@@ -6,13 +6,13 @@ require 'tempfile'
 
 Octokit.configure do |config|
   config.access_token = ENV.fetch('GITHUB_TOKEN')
-  config.api_endpoint = ENV.fetch('GITHUB_API_URL', 'https://github.bus.zalan.do//api/v3')
+  config.api_endpoint = ENV.fetch('GITHUB_API_URL', 'https://github.bus.zalan.do/api/v3')
 end
 
 ###########
 # sqlite functions
 
-SQLITE_PREFIX = "sqlite3 .git/github.sqlite3"
+SQLITE_PREFIX = 'sqlite3 .git/github.sqlite3'
 
 TITLE_MARKER = '<!-- ENTER PULL REQUEST TITLE BELOW -->'
 SUMMARY_MARKER = '<!-- SUMMARIZE PULL REQUEST BELOW -->'
@@ -101,7 +101,7 @@ end
 # Generate summary of commits in Markdown format so it is easy to read in the PR
 def generate_pull_request_title_and_body(domain, repo, base_ref, head: 'HEAD', title: nil, summary: nil, body: nil)
   # Extract existing summary if there is one
-  match = body&.match(/#{SUMMARY_MARKER}(?<summary>.*?)#{AUTOGEN_MARKER}/m)
+  match = body.match(/#{SUMMARY_MARKER}(?<summary>.*?)#{AUTOGEN_MARKER}/m)
   if !summary && match
     summary = match['summary'].strip
     summary = nil if summary.empty?
@@ -122,7 +122,7 @@ def generate_pull_request_title_and_body(domain, repo, base_ref, head: 'HEAD', t
   body = edit_string_with_editor(pr_body)
 
   # Extract new title if there is one
-  match = body&.match(/#{TITLE_MARKER}(?<title>.*?)#{SUMMARY_MARKER}/m)
+  match = body.match(/#{TITLE_MARKER}(?<title>.*?)#{SUMMARY_MARKER}/m)
   if match
     title = match['title'].strip
     title = nil if title.empty?
